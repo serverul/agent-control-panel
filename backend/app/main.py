@@ -9,7 +9,7 @@ async def lifespan(app: FastAPI):
     await init_db()
     yield
 
-app = FastAPI(title="Agent Control Panel", version="0.1.0", lifespan=lifespan)
+app = FastAPI(title="Agent Control Panel", version="0.1.0", lifespan=lifespan, redirect_slashes=False)
 
 app.add_middleware(
     CORSMiddleware,
