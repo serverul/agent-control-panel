@@ -28,23 +28,23 @@ export const api = {
     request("/auth/login", { method: "POST", body: JSON.stringify({ username, password }) }),
 
   // Agents
-  getAgents: () => request("/agents"),
+  getAgents: () => request("/agents/"),
   getAgent: (id: string) => request(`/agents/${id}`),
-  createAgent: (data: any) => request("/agents", { method: "POST", body: JSON.stringify(data) }),
+  createAgent: (data: any) => request("/agents/", { method: "POST", body: JSON.stringify(data) }),
   updateAgent: (id: string, data: any) => request(`/agents/${id}`, { method: "PUT", body: JSON.stringify(data) }),
   deleteAgent: (id: string) => request(`/agents/${id}`, { method: "DELETE" }),
 
   // Cron Jobs
-  getCronJobs: (agentId?: string) => request(`/cron-jobs${agentId ? `?agent_id=${agentId}` : ""}`),
-  createCronJob: (data: any) => request("/cron-jobs", { method: "POST", body: JSON.stringify(data) }),
+  getCronJobs: (agentId?: string) => request(`/cron-jobs/${agentId ? `?agent_id=${agentId}` : ""}`),
+  createCronJob: (data: any) => request("/cron-jobs/", { method: "POST", body: JSON.stringify(data) }),
   updateCronJob: (id: string, data: any) => request(`/cron-jobs/${id}`, { method: "PUT", body: JSON.stringify(data) }),
   runCronJob: (id: string) => request(`/cron-jobs/${id}/run`, { method: "POST" }),
   pauseCronJob: (id: string) => request(`/cron-jobs/${id}/pause`, { method: "POST" }),
   resumeCronJob: (id: string) => request(`/cron-jobs/${id}/resume`, { method: "POST" }),
 
   // Projects
-  getProjects: () => request("/projects"),
-  createProject: (data: any) => request("/projects", { method: "POST", body: JSON.stringify(data) }),
+  getProjects: () => request("/projects/"),
+  createProject: (data: any) => request("/projects/", { method: "POST", body: JSON.stringify(data) }),
   updateProject: (id: string, data: any) => request(`/projects/${id}`, { method: "PUT", body: JSON.stringify(data) }),
 
   // Chat
