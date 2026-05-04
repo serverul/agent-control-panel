@@ -9,7 +9,7 @@ from app.core.auth import verify_token
 from app.models.agent import Agent, AgentStatus
 import uuid
 
-router = APIRouter(prefix="/api/agents", tags=["agents"])
+router = APIRouter(prefix="/api/agents", tags=["agents"], redirect_slashes=False)
 
 class AgentCreate(BaseModel):
     name: str

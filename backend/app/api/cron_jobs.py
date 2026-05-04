@@ -9,7 +9,7 @@ from app.core.auth import verify_token
 from app.models.cron_job import CronJob
 import uuid
 
-router = APIRouter(prefix="/api/cron-jobs", tags=["cron-jobs"])
+router = APIRouter(prefix="/api/cron-jobs", tags=["cron-jobs"], redirect_slashes=False)
 
 class CronJobCreate(BaseModel):
     agent_id: str

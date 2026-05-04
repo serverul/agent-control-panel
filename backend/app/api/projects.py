@@ -9,7 +9,7 @@ from app.core.auth import verify_token
 from app.models.project import Project
 import uuid
 
-router = APIRouter(prefix="/api/projects", tags=["projects"])
+router = APIRouter(prefix="/api/projects", tags=["projects"], redirect_slashes=False)
 
 class ProjectCreate(BaseModel):
     name: str
