@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: acp
+      POSTGRES_PASSWORD: acp_secret
+      POSTGRES_DB: agent_control_panel
+    volumes:
+      - acp_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    ports:
+      - "3100:8000"
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://acp:acp_secret@db:5432/agent_control_panel"
+      SECRET_KEY: "change-me-in-production"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3101:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  acp_data:
