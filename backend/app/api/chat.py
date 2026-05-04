@@ -49,7 +49,7 @@ async def send_message(channel: str, msg: ChatMessageCreate, sender: str = "user
         channel=channel,
         sender=sender,
         content=msg.content,
-        metadata=msg.metadata
+        metadata=msg.extra
     )
     db.add(db_msg)
     await db.commit()

@@ -6,8 +6,8 @@ class ChatMessage(Base):
     __tablename__ = "chat_messages"
     
     id = Column(String, primary_key=True)
-    channel = Column(String, nullable=False, index=True)  # general, project:hartagis, dm:hermes:openclaw
-    sender = Column(String, nullable=False)  # agent_id or "user"
+    channel = Column(String, nullable=False, index=True)
+    sender = Column(String, nullable=False)
     content = Column(String, nullable=False)
     timestamp = Column(DateTime, default=datetime.utcnow, index=True)
-    metadata = Column(JSON, default=dict)
+    extra = Column("metadata", JSON, default=dict)
