@@ -11,6 +11,9 @@ import uuid
 
 router = APIRouter(prefix="/api/cron-jobs", tags=["cron-jobs"], redirect_slashes=False)
 
+# In-memory history store: job_id -> list of history entries
+_job_history: dict[str, list] = {}
+
 class CronJobCreate(BaseModel):
     agent_id: str
     name: str
@@ -38,6 +41,11 @@ class CronJobResponse(BaseModel):
     
     class Config:
         from_attributes = True
+
+class HistoryItem(BaseModel):
+    run_at: datetime
+    status: str
+    output: str
 
 @router.get("/", response_model=List[CronJobResponse])
 async def list_cron_jobs(agent_id: str = None, db: AsyncSession = Depends(get_db), user: str = Depends(verify_token)):
@@ -97,3 +105,8 @@ async def resume_cron_job(job_id: str, db: AsyncSession = Depends(get_db), user:
     job.enabled = True
     await db.commit()
     return {"message": "Job resumed"}
+
+@router.get("/{job_id}/history", response_model=List[HistoryItem])
+async def get_cron_job_history(job_id: str, user: str = Depends(verify_token)):
+    history = _job_history.get(job_id, [])
+    return [HistoryItem(run_at=h["run_at"], status=h["status"], output=h["output"]) for h in history]

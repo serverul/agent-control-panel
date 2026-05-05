@@ -38,7 +38,8 @@ class ProjectResponse(BaseModel):
         from_attributes = True
 
 @router.get("/", response_model=List[ProjectResponse])
-async def list_projects(db: AsyncSession = Depends(get_db), user: str = Depends(verify_token)):
+async def list_projects(db: AsyncSession = Depends(get_db)):
+    """List all projects. No auth required for read access."""
     result = await db.execute(select(Project))
     return result.scalars().all()
 
